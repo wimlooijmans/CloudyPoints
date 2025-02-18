@@ -19,7 +19,7 @@ First, we need our input images which are RGB images representing the scence on 
 | --- | --- | --- | --- |
 | 1.1 | W01 | Pick a team | ✅ |
 | 1.2 | W02 | Select a use case | ✅ |
-| 1.3 | W02 | Define your use case | ✅ |
+| 1.3 | W02 | Define the use case | ✅ |
 | 1.4 | W02 | Find a cool name | ✅ |
 | 1.5 | W02 | Setup communication channel | ✅ |
 | 1.6 | W02 | Setup a code versioning repository | ✅ |
