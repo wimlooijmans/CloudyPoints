@@ -6,4 +6,4 @@ CloudyPoints is a project where we'll work on Moncular Depth Estimation (MDE) an
 This task is super important in real life like in Autonoumous systems (Collision avoidance, ...)  and video surveillance.
 
 ## GOAL of the project
-The final goal of this project is to be able to design and implement the application we described in the Discription. TO do this, we need several steps as we want to design a full system using Machine Learning Operations best practices (MLOps).
+The final goal of this project is to be able to design and implement the application we described in the Discription. TO do this, we need several steps as we want to design a full system using Machine Learning Operations best practices (MLOps). We will focus more on outdoor scenes.
