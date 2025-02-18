@@ -29,5 +29,5 @@ First, we need our input images which are RGB images representing the scence on 
 Amar Hamouma  - amar.hamouma@student.uliege.be\
 Wim Looijmans - wim.looijmans@student.uliege.be
 
-## Licence 
+## License 
 
