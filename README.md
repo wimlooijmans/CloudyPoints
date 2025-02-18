@@ -26,8 +26,8 @@ First, we need our input images which are RGB images representing the scence on 
 | 1.7 | W02 | Project card | ✅ |
 
 ## Team 
-Amar Hamouma  - amar.hamouma@student.uliege.be\
-Wim Looijmans - wim.looijmans@student.uliege.be
+Amar Hamouma  - amar.hamouma@student.uliege.be.\
+Wim Looijmans - wim.looijmans@student.uliege.be.
 
 ## License 
 This work is licensed under the [MIT License](./LICENSE).
