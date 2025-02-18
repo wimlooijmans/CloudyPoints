@@ -15,5 +15,5 @@ First, we need our input images which are RGB images representing the scence on 
 ![image](https://github.com/user-attachments/assets/c342d016-55a2-4c5e-b994-130344680f39)
 
 ## Team 
-Amar Hamouma  - amar.hamouma@student.uliege.be
+Amar Hamouma  - amar.hamouma@student.uliege.be\n
 Wim Looijmans - wim.looijmans@student.uliege.be
