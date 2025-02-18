@@ -15,15 +15,15 @@ First, we need our input images which are RGB images representing the scence on 
 ![image](https://github.com/user-attachments/assets/c342d016-55a2-4c5e-b994-130344680f39)
 
 ## TODO
-| # | Week | Work package|
-| --- | --- | --- |
-| 1.1 | W01 | Pick a team |
-| 1.2 | W02 | Select a use case |
-| 1.3 | W02 | Define your use case |
-| 1.4 | W02 | Find a cool name |
-| 1.5 | W02 | Setup communication channel |
-| 1.6 | W02 | Setup a code versioning repository |
-| 1.7 | W02 | Project card |
+| # | Week | Work package| status | 
+| --- | --- | --- | --- |
+| 1.1 | W01 | Pick a team | ✅ |
+| 1.2 | W02 | Select a use case | ✅ |
+| 1.3 | W02 | Define your use case | ✅ |
+| 1.4 | W02 | Find a cool name | ✅ |
+| 1.5 | W02 | Setup communication channel | ✅ |
+| 1.6 | W02 | Setup a code versioning repository | ✅ |
+| 1.7 | W02 | Project card | ✅ |
 
 ## Team 
 Amar Hamouma  - amar.hamouma@student.uliege.be\
