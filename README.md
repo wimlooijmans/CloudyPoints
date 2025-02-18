@@ -30,4 +30,4 @@ Amar Hamouma  - amar.hamouma@student.uliege.be\
 Wim Looijmans - wim.looijmans@student.uliege.be
 
 ## License 
-
+This work is licensed under the [MIT License](./LICENSE).
