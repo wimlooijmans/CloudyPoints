@@ -7,3 +7,7 @@ This task is super important in real life like in Autonoumous systems (Collision
 
 ## GOAL of the project
 The final goal of this project is to be able to design and implement the application we described in the Discription. TO do this, we need several steps as we want to design a full system using Machine Learning Operations best practices (MLOps). We will focus more on outdoor scenes.
+
+## Dataset
+During this project, we will use the CityScapes Dataset which focuses on semantic understanding of urban street scenes. We have two important kind of images. 
+First, we need our input images which are RGB images representing the scence on which we want to estimate the depth and generate the 3D point cloud. Second, we need the ground truth Depth maps of our input images in order to compare with the predictions made by our model.
