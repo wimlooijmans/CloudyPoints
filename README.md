@@ -11,3 +11,6 @@ The final goal of this project is to be able to design and implement the applica
 ## Dataset
 During this project, we will use the CityScapes Dataset which focuses on semantic understanding of urban street scenes. We have two important kind of images. 
 First, we need our input images which are RGB images representing the scence on which we want to estimate the depth and generate the 3D point cloud. Second, we need the ground truth Depth maps of our input images in order to compare with the predictions made by our model.
+
+![image](https://github.com/user-attachments/assets/c342d016-55a2-4c5e-b994-130344680f39)
+
