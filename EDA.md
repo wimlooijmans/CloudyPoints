@@ -11,6 +11,8 @@ Training set:  2975 \
 Validation set:  500 \
 Test set:  1525
 
+Image Size: (2048, 1024)
+
 #### Training Set
 | City            |   Number of images |
 |-----------------|--------------------|
