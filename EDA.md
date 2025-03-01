@@ -53,6 +53,13 @@ Image Size: (2048, 1024)
 | mainz      |                298 |
 | munich     |                398 |
 
+### Sample Images
+Sample image Aachen: \
+![Sample image aachen](sample_images/aachen_000000_000019_left.png)
+
+Sapmple image Hanover: \
+![Sample image hanover](sample_images/hanover_000000_019116_right.png)
+
 ## Data pipeline
 
 ### Data Cleaning
