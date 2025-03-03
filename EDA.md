@@ -57,13 +57,19 @@ Image Size: (2048, 1024)
 Sample image Aachen: \
 ![Sample image aachen](sample_images/aachen_000000_000019_left.png)
 
-Sapmple image Hanover: \
+Sample image Hanover: \
 ![Sample image hanover](sample_images/hanover_000000_019116_right.png)
 
-## Data pipeline
+### Disparity
+The Cityscapes dataset also contains the disparity for each image pair. This disparity will be used to calculate the depth.
 
-### Data Cleaning
+The disparity for the Aachen sample image:
+![Sample disparity aachen](sample_images/aachen_000000_000019_disparity_map.png)
 
+There are a few things that stand out on the disparity map:
+* There is some missing information on the left side.
+* There is missing information in the bottom, caused by the hood of the car.
+* The Mercedes emblem is shown two times, because of the stereo camera
+* There is some noise
 
-
-
+These issues will be handled in the data preparation.
