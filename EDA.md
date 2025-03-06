@@ -1,7 +1,7 @@
 # Exploratory Data Analysis (EDA)
 This section explains the exploratory data analysis (EDA)
 
-## Dataset
+## Cityscapes Dataset
 The dataset to train, validate and test the model is the Cityscapes dataset (https://www.cityscapes-dataset.com).
 The dataset contains images of urban street scenes captured in German cities. Images were captured using a stereo camera. Both the left and right RGB image (8bit) are made publically available. Also, the disparity is shared, which can be used to create depth maps.
 
@@ -78,3 +78,10 @@ There are a few things that stand out on the disparity map:
 * There is some noise
 
 These issues will be handled in the data preparation.
+
+## Resized dataset (After Data Preparation)
+
+Images have now a height of 400 pixels. \
+Depth maps have been created.
+
+![Sample resized image and depth aachen](sample_images/resized_sample_image_and_depth.png)
