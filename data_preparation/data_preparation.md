@@ -4,7 +4,7 @@ During the data preparation step, two main tasks will be done for each image in 
 ## Depth map
 The Cityscapes dataset includes the disparity for each image pair. This disparity is used to calculate the depth map for each image.
 
-![Sample disparity aachen](sample_images/aachen_000000_000019_disparity_map.png)
+![Sample disparity aachen](../sample_images/aachen_000000_000019_disparity_map.png)
 
 First, the disparity image is cropped to discard the missing information in the left and bottom.
 Next, the spots with missing values (infinite depth) are filled by using performing inpainting on the disparity map. Then, the disparity map is blurred to decrease the noise.
@@ -17,4 +17,4 @@ Calculation of the depth is based on following [notebook](https://github.com/itb
 The images are cropped as the disparity map to discard the missing info and the hood of the car. Then the images and depth maps are resized to a height of 400 pixels. This is done to reduce the storage space needed for the dataset and to speed up model training.
 
 Sample image after resizing and depth image: \
-![Sample aachen](sample_images/resized_sample_image_and_depth.png)
+![Sample aachen](../sample_images/resized_sample_image_and_depth.png)
