@@ -53,6 +53,11 @@ Image Size: (2048, 1024)
 | mainz      |                298 |
 | munich     |                398 |
 
+\
+Number of images per city: \
+![Number of images per city](sample_images/number_of_images_per_city.png)
+
+
 ### Sample Images
 Sample image Aachen: \
 ![Sample image aachen](sample_images/aachen_000000_000019_left.png)
