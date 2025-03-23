@@ -1,0 +1,10 @@
+numpy
+matplotlib
+pytorch-lightning
+torchmetrics
+torchsummary
+torchvision
+timm
+flask
+# onnx
+# onnxscript
