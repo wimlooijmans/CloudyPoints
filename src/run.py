@@ -27,11 +27,16 @@ from model_loader import MiDaSFineTuner
 # create Flask instance
 app = Flask(__name__)
 
+# Paths
+path_src = Path(__file__).resolve().parent
+path_models = path_src.parent / 'models'
+path_DPT_Hybrid = path_models / 'DPT_Hybrid_1.ckpt'
+
 # Load model
-model_load = MiDaSFineTuner.load_from_checkpoint("./models/DPT_Hybrid_1.ckpt")
+model_load = MiDaSFineTuner.load_from_checkpoint(path_DPT_Hybrid)
 
 # Load sample image
-sample_image = Image.open('src/berlin_000000_000019_left_image.png')
+sample_image = Image.open('/src/berlin_000000_000019_left_image.png')
 
 # Transform sample image to tensor
 transform = transforms.Compose([
