@@ -8,6 +8,7 @@ COPY /src/cityscapes_dataset.py .
 COPY /src/model_loader.py .
 COPY /src/run.py .
 COPY /src/templates/welcome.html /src/templates/
+COPY /src/templates/result.html /src/templates/
 EXPOSE 8080
 RUN pip install -r requirements.txt
 ENV FLASK_APP=run.py
