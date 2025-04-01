@@ -48,6 +48,7 @@ if not path_outputs.exists():
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = path_uploads
 app.config['OUTPUTS_FOLDER'] = path_outputs
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 # Load model
 model_load = MiDaSFineTuner.load_from_checkpoint(path_DPT_Hybrid)
@@ -89,11 +90,24 @@ def upload_image():
     </form>
     '''
 
-@app.route('/predict/<img_name>')
-def predict(img_name):
-    path_img = app.config['UPLOAD_FOLDER'] / img_name
-    img_upload = Image.open(path_img)
+@app.route('/direct_upload', methods=['POST'])
+def direct_upload_image():
+    if request.method == 'POST':
+        key = list(request.files.keys())[0] # get first key
+        img = request.files.get(key)
+        if img and allowed_file(img.filename):
+            filename = secure_filename(img.filename)
+            img.save(app.config['UPLOAD_FOLDER'] / filename)
+            # img_read = img.read()
+            return redirect(url_for('predict', img_name=filename), code=307)
+        
+    return ""
 
+def make_prediction(img):
+    """
+    Input: PIL.Image
+    Output: depth map PIL.Image
+    """
     #Normalization?
 
     # Transform sample image to tensor
@@ -101,7 +115,7 @@ def predict(img_name):
         transforms.Resize((384, 384)),
         transforms.ToTensor(),
     ])
-    img_tensor = transform(img_upload)
+    img_tensor = transform(img)
     img_tensor = torch.unsqueeze(img_tensor, dim=0)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -115,25 +129,59 @@ def predict(img_name):
 
     depth_map *= (1.0/depth_map.max()) # scale between 0 and 1
     depth_img = Image.fromarray(np.uint8(cm.viridis(depth_map)*255))
-    path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
-    depth_img.save(path_depth_img, "PNG")
+    
+    return depth_img
 
-    return redirect(url_for('show_result', img_name=img_name))
 
-@app.route('/result/<img_name>')
+@app.route('/predict/<img_name>', methods=['GET', 'POST'])
+def predict(img_name):
+    if request.method == 'GET':
+        path_img = app.config['UPLOAD_FOLDER'] / img_name
+        img_upload = Image.open(path_img)
+
+        depth_img = make_prediction(img_upload)
+        path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
+        depth_img.save(path_depth_img, "PNG")
+
+        return redirect(url_for('show_result', img_name=img_name))
+    
+    elif request.method == 'POST':
+        key = list(request.files.keys())[0] # get first key
+        img = request.files.get(key)
+        if img and allowed_file(img.filename):
+            filename = secure_filename(img.filename)           
+            img_upload = Image.open(img)
+
+            depth_img = make_prediction(img_upload)
+            path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + filename)
+            depth_img.save(path_depth_img, "PNG")
+
+            return redirect(url_for('show_result', img_name=filename))
+
+@app.route('/result/<img_name>', methods=['GET'])
 def show_result(img_name):
-    path_img = app.config['UPLOAD_FOLDER'] / img_name
+    if request.method == 'GET':
+        path_img = app.config['UPLOAD_FOLDER'] / img_name
+        img = Image.open(path_img)
+        img_size = img.size
+
+        path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
+        depth_img = Image.open(path_depth_img).convert('RGB').resize(img_size)
+
+    elif request.method == 'POST':
+        key = list(request.files.keys())[0] # get first key
+        img = request.files.get(key)
+        if img and allowed_file(img.filename):
+            img_name = secure_filename(img.filename)
+            img = Image.open(img)
+            img_size = img.size
 
     # encode image
-    img = Image.open(path_img)
-    img_size = img.size
     data = io.BytesIO()
     img.save(data, "JPEG")
     encoded_img_data = base64.b64encode(data.getvalue())
 
     # Encode depth map
-    path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
-    depth_img = Image.open(path_depth_img).convert('RGB').resize(img_size)
     data_depth = io.BytesIO()
     depth_img.save(data_depth, "JPEG")
     encoded_depth = base64.b64encode(data_depth.getvalue())
