@@ -4,20 +4,7 @@ import io
 
 import torch
 import numpy as np
-# import torch.nn as nn
-# import matplotlib.pyplot as plt
-# from torchsummary import summary
-# from torch.utils.data import Dataset
-# from torchvision.io import read_image
-# from torchvision.io import ImageReadMode
-# from torch.utils.data import DataLoader
 import torchvision.transforms.v2 as transforms
-# import torch.optim as optim
-# import torchmetrics
-# from torchmetrics.image import StructuralSimilarityIndexMeasure
-# import pytorch_lightning as pl
-# from pytorch_lightning import Trainer
-# from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 
 from flask import Flask, render_template , request, flash, jsonify, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
@@ -98,7 +85,6 @@ def direct_upload_image():
         if img and allowed_file(img.filename):
             filename = secure_filename(img.filename)
             img.save(app.config['UPLOAD_FOLDER'] / filename)
-            # img_read = img.read()
             return redirect(url_for('predict'), code=307)
         
     return ""
@@ -130,20 +116,8 @@ def make_prediction(img):
     
     return depth_img
 
-# @app.route('/predict/<img_name>', methods=['GET', 'POST'])
 @app.route('/predict/', methods=['POST'])
 def predict():
-# def predict(img_name):
-    # if request.method == 'GET':
-    #     path_img = app.config['UPLOAD_FOLDER'] / img_name
-    #     img_upload = Image.open(path_img)
-
-    #     depth_img = make_prediction(img_upload)
-    #     path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
-    #     depth_img.save(path_depth_img, "PNG")
-
-    #     return redirect(url_for('show_result', img_name=img_name))
-    
     if request.method == 'POST':
         key = list(request.files.keys())[0] # get first key
         img = request.files.get(key)
@@ -173,14 +147,6 @@ def show_result(img_name):
         path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
         depth_img = Image.open(path_depth_img).convert('RGB').resize(img_size)
 
-    elif request.method == 'POST':
-        key = list(request.files.keys())[0] # get first key
-        img = request.files.get(key)
-        if img and allowed_file(img.filename):
-            img_name = secure_filename(img.filename)
-            img = Image.open(img)
-            img_size = img.size
-
     # encode image
     data = io.BytesIO()
     img.save(data, "JPEG")
@@ -194,5 +160,5 @@ def show_result(img_name):
     return render_template('result.html', title=img_name, img_data=encoded_img_data.decode('utf-8'), depth_data=encoded_depth.decode('utf-8'))
 
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0", port=5001)
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5001)
+    # app.run(debug=True)

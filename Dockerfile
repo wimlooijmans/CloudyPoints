@@ -2,8 +2,6 @@ FROM python:3.12
 WORKDIR /src
 COPY requirements.txt .
 COPY /models/DPT_Hybrid_1.ckpt ../models/DPT_Hybrid_1.ckpt
-COPY /src/berlin_000000_000019_depth_image.png .
-COPY /src/berlin_000000_000019_left_image.png .
 COPY /src/cityscapes_dataset.py .
 COPY /src/model_loader.py .
 COPY /src/run.py .

@@ -6,5 +6,6 @@ torchsummary
 torchvision
 timm
 flask
+requests
 # onnx
 # onnxscript
