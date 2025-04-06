@@ -19,8 +19,9 @@ import torchvision.transforms.v2 as transforms
 # from pytorch_lightning import Trainer
 # from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 
-from flask import Flask, render_template , request, flash, jsonify, redirect, url_for
+from flask import Flask, render_template , request, flash, jsonify, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
+import requests
 
 from PIL import Image
 from matplotlib import cm
@@ -78,8 +79,7 @@ def upload_image():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(app.config['UPLOAD_FOLDER'] / filename)
-            return redirect(url_for('predict', img_name=filename))
+            return redirect(url_for('direct_upload_image'), code=307)
     return '''
     <!doctype html>
     <title>Upload new Image</title>
@@ -99,7 +99,7 @@ def direct_upload_image():
             filename = secure_filename(img.filename)
             img.save(app.config['UPLOAD_FOLDER'] / filename)
             # img_read = img.read()
-            return redirect(url_for('predict', img_name=filename), code=307)
+            return redirect(url_for('predict'), code=307)
         
     return ""
 
@@ -108,8 +108,6 @@ def make_prediction(img):
     Input: PIL.Image
     Output: depth map PIL.Image
     """
-    #Normalization?
-
     # Transform sample image to tensor
     transform = transforms.Compose([
         transforms.Resize((384, 384)),
@@ -132,20 +130,21 @@ def make_prediction(img):
     
     return depth_img
 
+# @app.route('/predict/<img_name>', methods=['GET', 'POST'])
+@app.route('/predict/', methods=['POST'])
+def predict():
+# def predict(img_name):
+    # if request.method == 'GET':
+    #     path_img = app.config['UPLOAD_FOLDER'] / img_name
+    #     img_upload = Image.open(path_img)
 
-@app.route('/predict/<img_name>', methods=['GET', 'POST'])
-def predict(img_name):
-    if request.method == 'GET':
-        path_img = app.config['UPLOAD_FOLDER'] / img_name
-        img_upload = Image.open(path_img)
+    #     depth_img = make_prediction(img_upload)
+    #     path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
+    #     depth_img.save(path_depth_img, "PNG")
 
-        depth_img = make_prediction(img_upload)
-        path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
-        depth_img.save(path_depth_img, "PNG")
-
-        return redirect(url_for('show_result', img_name=img_name))
+    #     return redirect(url_for('show_result', img_name=img_name))
     
-    elif request.method == 'POST':
+    if request.method == 'POST':
         key = list(request.files.keys())[0] # get first key
         img = request.files.get(key)
         if img and allowed_file(img.filename):
@@ -157,6 +156,12 @@ def predict(img_name):
             depth_img.save(path_depth_img, "PNG")
 
             return redirect(url_for('show_result', img_name=filename))
+
+            # data_depth = io.BytesIO()
+            # depth_img.convert('RGB').save(data_depth, "JPEG")
+            # return send_file(data_depth, mimetype='image/jpeg')
+        
+    return ""
 
 @app.route('/result/<img_name>', methods=['GET'])
 def show_result(img_name):
