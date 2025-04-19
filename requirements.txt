@@ -2,7 +2,7 @@ numpy
 matplotlib
 pytorch-lightning
 torchmetrics
-torchsummary
+# torchsummary
 torchvision
 timm
 flask

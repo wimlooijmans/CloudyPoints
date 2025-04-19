@@ -21,7 +21,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 # Paths
 path_src = Path(__file__).resolve().parent
 path_models = path_src.parent / 'models'
-path_DPT_Hybrid = path_models / 'DPT_Hybrid_1.ckpt'
+# path_DPT_Hybrid = path_models / 'DPT_Hybrid_1.ckpt'
+url_DPT_Hybrid = "https://storage.googleapis.com/cp_bucket-1/models/DPT_Hybrid_1.ckpt"
 path_uploads = path_src / 'uploads'
 path_outputs = path_src / 'outputs'
 
@@ -39,7 +40,7 @@ app.config['OUTPUTS_FOLDER'] = path_outputs
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 # Load model
-model_load = MiDaSFineTuner.load_from_checkpoint(path_DPT_Hybrid)
+model_load = MiDaSFineTuner.load_from_checkpoint(url_DPT_Hybrid)
 model_load.eval()
 
 @app.route('/')
