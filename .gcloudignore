@@ -1,0 +1,16 @@
+# .gcloudignore
+
+.venv
+data
+data_preparation
+lightning_logs
+models
+presentations
+sample_images
+src/__pycache__
+src/models_jit
+src/outputs
+src/uploads
+src/model_saved.pth
+*.ipynb
+*.md
