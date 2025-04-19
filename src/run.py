@@ -40,6 +40,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 # Load model
 model_load = MiDaSFineTuner.load_from_checkpoint(path_DPT_Hybrid)
+model_load.eval()
 
 @app.route('/')
 def welcome():

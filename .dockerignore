@@ -1,0 +1,11 @@
+# .dockerignore
+
+.venv
+data
+data_preparation
+lightning_logs
+presentations
+src/outputs
+src/uploads
+*.ipynb
+

@@ -20,7 +20,8 @@ import pytorch_lightning as pl
 class MiDaSFineTuner(pl.LightningModule):
     def __init__(self, learning_rate=5e-5):
         super().__init__()
-        self.model = torch.hub.load("intel-isl/MiDaS", "DPT_Hybrid")
+        # self.model = torch.hub.load("intel-isl/MiDaS", "DPT_Hybrid")
+        self.model = torch.hub.load("intel-isl/MiDaS", "DPT_Hybrid", pretrained=False)
         self.learning_rate = learning_rate
         self.lossa_fn = nn.L1Loss()
 
