@@ -1,5 +1,6 @@
 # .gcloudignore
 
+.git
 .venv
 data
 data_preparation
