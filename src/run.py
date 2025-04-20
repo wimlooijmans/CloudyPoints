@@ -13,8 +13,9 @@ import requests
 from PIL import Image
 from matplotlib import cm
 
-from cityscapes_dataset import CityscapesDataset
+# from cityscapes_dataset import CityscapesDataset
 from model_loader import MiDaSFineTuner
+# from src import MiDaSFineTuner
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -34,10 +35,14 @@ if not path_outputs.exists():
     path_outputs.mkdir()
 
 # create Flask instance
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = path_uploads
-app.config['OUTPUTS_FOLDER'] = path_outputs
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+def create_app():
+    app = Flask(__name__)
+    app.config['UPLOAD_FOLDER'] = path_uploads
+    app.config['OUTPUTS_FOLDER'] = path_outputs
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+    return app
+
+app = create_app()
 
 # Load model
 model_load = MiDaSFineTuner.load_from_checkpoint(url_DPT_Hybrid)
