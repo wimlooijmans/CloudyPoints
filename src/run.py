@@ -15,7 +15,6 @@ from matplotlib import cm
 
 # from cityscapes_dataset import CityscapesDataset
 from model_loader import MiDaSFineTuner
-# from src import MiDaSFineTuner
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -34,67 +33,9 @@ if not path_uploads.exists():
 if not path_outputs.exists():
     path_outputs.mkdir()
 
-# create Flask instance
-def create_app():
-    app = Flask(__name__)
-    app.config['UPLOAD_FOLDER'] = path_uploads
-    app.config['OUTPUTS_FOLDER'] = path_outputs
-    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-    return app
-
-app = create_app()
-
 # Load model
 model_load = MiDaSFineTuner.load_from_checkpoint(url_DPT_Hybrid)
 model_load.eval()
-
-@app.route('/')
-def welcome():
-    title = 'CloudyPoints'
-    greeting = 'Welcome to CloudyPoints'
-    return render_template('welcome.html', title=title, greeting=greeting)
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_image():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            return redirect(url_for('direct_upload_image'), code=307)
-    return '''
-    <!doctype html>
-    <title>Upload new Image</title>
-    <h1>Upload new Image</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
-
-@app.route('/direct_upload', methods=['POST'])
-def direct_upload_image():
-    if request.method == 'POST':
-        key = list(request.files.keys())[0] # get first key
-        img = request.files.get(key)
-        if img and allowed_file(img.filename):
-            filename = secure_filename(img.filename)
-            img.save(app.config['UPLOAD_FOLDER'] / filename)
-            return redirect(url_for('predict'), code=307)
-        
-    return ""
 
 def make_prediction(img):
     """
@@ -123,49 +64,112 @@ def make_prediction(img):
     
     return depth_img
 
-@app.route('/predict/', methods=['POST'])
-def predict():
-    if request.method == 'POST':
-        key = list(request.files.keys())[0] # get first key
-        img = request.files.get(key)
-        if img and allowed_file(img.filename):
-            filename = secure_filename(img.filename)           
-            img_upload = Image.open(img)
 
-            depth_img = make_prediction(img_upload)
-            path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + filename)
-            depth_img.save(path_depth_img, "PNG")
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-            return redirect(url_for('show_result', img_name=filename))
 
-            # data_depth = io.BytesIO()
-            # depth_img.convert('RGB').save(data_depth, "JPEG")
-            # return send_file(data_depth, mimetype='image/jpeg')
-        
-    return ""
+# create Flask instance
+def create_app():
+    app = Flask(__name__)
+    app.config['UPLOAD_FOLDER'] = path_uploads
+    app.config['OUTPUTS_FOLDER'] = path_outputs
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
-@app.route('/result/<img_name>', methods=['GET'])
-def show_result(img_name):
-    if request.method == 'GET':
-        path_img = app.config['UPLOAD_FOLDER'] / img_name
-        img = Image.open(path_img)
-        img_size = img.size
+    @app.route('/')
+    def welcome():
+        title = 'CloudyPoints'
+        greeting = 'Welcome to CloudyPoints'
+        return render_template('welcome.html', title=title, greeting=greeting)
 
-        path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
-        depth_img = Image.open(path_depth_img).convert('RGB').resize(img_size)
 
-    # encode image
-    data = io.BytesIO()
-    img.save(data, "JPEG")
-    encoded_img_data = base64.b64encode(data.getvalue())
+    @app.route('/upload', methods=['GET', 'POST'])
+    def upload_image():
+        if request.method == 'POST':
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['file']
+            # If the user does not select a file, the browser submits an
+            # empty file without a filename.
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                return redirect(url_for('direct_upload_image'), code=307)
+        return '''
+        <!doctype html>
+        <title>Upload new Image</title>
+        <h1>Upload new Image</h1>
+        <form method=post enctype=multipart/form-data>
+        <input type=file name=file>
+        <input type=submit value=Upload>
+        </form>
+        '''
 
-    # Encode depth map
-    data_depth = io.BytesIO()
-    depth_img.save(data_depth, "JPEG")
-    encoded_depth = base64.b64encode(data_depth.getvalue())
+    @app.route('/direct_upload', methods=['POST'])
+    def direct_upload_image():
+        if request.method == 'POST':
+            key = list(request.files.keys())[0] # get first key
+            img = request.files.get(key)
+            if img and allowed_file(img.filename):
+                filename = secure_filename(img.filename)
+                img.save(app.config['UPLOAD_FOLDER'] / filename)
+                return redirect(url_for('predict'), code=307)
+            
+        return ""
 
-    return render_template('result.html', title=img_name, img_data=encoded_img_data.decode('utf-8'), depth_data=encoded_depth.decode('utf-8'))
+
+    @app.route('/predict/', methods=['POST'])
+    def predict():
+        if request.method == 'POST':
+            key = list(request.files.keys())[0] # get first key
+            img = request.files.get(key)
+            if img and allowed_file(img.filename):
+                filename = secure_filename(img.filename)           
+                img_upload = Image.open(img)
+
+                depth_img = make_prediction(img_upload)
+                path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + filename)
+                depth_img.save(path_depth_img, "PNG")
+
+                return redirect(url_for('show_result', img_name=filename))
+
+                # data_depth = io.BytesIO()
+                # depth_img.convert('RGB').save(data_depth, "JPEG")
+                # return send_file(data_depth, mimetype='image/jpeg')
+            
+        return ""
+
+    @app.route('/result/<img_name>', methods=['GET'])
+    def show_result(img_name):
+        if request.method == 'GET':
+            path_img = app.config['UPLOAD_FOLDER'] / img_name
+            img = Image.open(path_img)
+            img_size = img.size
+
+            path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + path_img.stem + '.png')
+            depth_img = Image.open(path_depth_img).convert('RGB').resize(img_size)
+
+        # encode image
+        data = io.BytesIO()
+        img.save(data, "JPEG")
+        encoded_img_data = base64.b64encode(data.getvalue())
+
+        # Encode depth map
+        data_depth = io.BytesIO()
+        depth_img.save(data_depth, "JPEG")
+        encoded_depth = base64.b64encode(data_depth.getvalue())
+
+        return render_template('result.html', title=img_name, img_data=encoded_img_data.decode('utf-8'), depth_data=encoded_depth.decode('utf-8'))
+
+    return app
+
 
 if __name__ == '__main__':
+    app = create_app()
     app.run(host="0.0.0.0", port=5001)
     # app.run(debug=True)
