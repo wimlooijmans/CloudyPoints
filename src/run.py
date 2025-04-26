@@ -21,17 +21,17 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 # Paths
 path_src = Path(__file__).resolve().parent
 path_models = path_src.parent / 'models'
-# path_DPT_Hybrid = path_models / 'DPT_Hybrid_1.ckpt'
+path_user_data_storage = path_src.parent / 'mnt' / 'user_data_storage'
 url_DPT_Hybrid = "https://storage.googleapis.com/cp_bucket-1/models/DPT_Hybrid_1.ckpt"
-path_uploads = path_src / 'uploads'
-path_outputs = path_src / 'outputs'
+path_uploads = path_user_data_storage / 'uploads'
+path_outputs = path_user_data_storage / 'outputs'
 
 # create directories for uploads and outputs
 if not path_uploads.exists():
-    path_uploads.mkdir()
+    path_uploads.mkdir(parents=True)
 
 if not path_outputs.exists():
-    path_outputs.mkdir()
+    path_outputs.mkdir(parents=True)
 
 # Load model
 model_load = MiDaSFineTuner.load_from_checkpoint(url_DPT_Hybrid)
@@ -168,8 +168,7 @@ def create_app():
 
     return app
 
-
+app = create_app()
 if __name__ == '__main__':
-    app = create_app()
     app.run(host="0.0.0.0", port=5001)
     # app.run(debug=True)

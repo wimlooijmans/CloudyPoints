@@ -4,6 +4,8 @@
 data
 data_preparation
 lightning_logs
+mnt
+models
 presentations
 src/outputs
 src/uploads

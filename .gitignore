@@ -153,3 +153,4 @@ MNIST
 # CloudyPoints
 src/outputs/
 src/uploads/
+mnt
