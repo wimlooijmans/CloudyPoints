@@ -9,7 +9,7 @@ def app():
     app.config.update({
         "TESTING": True,
     })
-    print("conftest.py - app() - app created and config")
+    
     # other setup can go here
 
     yield app

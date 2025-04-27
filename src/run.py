@@ -83,7 +83,7 @@ def create_app():
         '''
 
 
-    @app.route('/predict/', methods=['POST'])
+    @app.route('/predict', methods=['POST'])
     def predict():
         if request.method == 'POST':
             key = list(request.files.keys())[0] # get first key
@@ -123,7 +123,7 @@ def create_app():
                 path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + filename)
                 depth_img.resize(img_size).save(path_depth_img, "PNG")
 
-                return send_file(path_depth_img)
+                return send_file(path_depth_img), 201
             
         return ""
 
