@@ -52,7 +52,7 @@ def create_app():
     @app.route('/')
     def welcome():
         title = 'CloudyPoints'
-        greeting = 'Welcome to CloudyPoints'
+        greeting = 'Welcome to CloudyPoints Model Serving'
         return render_template('welcome.html', title=title, greeting=greeting)
 
 
@@ -94,8 +94,9 @@ def create_app():
                 filename = secure_filename(img.filename)
                 img.save(app.config['UPLOAD_FOLDER'] / filename)
 
-                # Convert to PIL Image
+                # Convert to PIL Image and store image size
                 img = Image.open(img)
+                img_size = img.size
 
                 # Transform image to tensor
                 transform = transforms.Compose([
@@ -118,15 +119,11 @@ def create_app():
                 depth_map *= (1.0/depth_map.max()) # scale between 0 and 1
                 depth_img = Image.fromarray(np.uint8(cm.viridis(depth_map)*255))
 
-                # Save depth output as image in mounted GCS bucket
+                # Resize and save depth output as image in mounted GCS bucket
                 path_depth_img = app.config['OUTPUTS_FOLDER'] / ('prediction-' + filename)
-                depth_img.save(path_depth_img, "PNG")
+                depth_img.resize(img_size).save(path_depth_img, "PNG")
 
-                return redirect(url_for('show_result', img_name=filename))
-
-                # data_depth = io.BytesIO()
-                # depth_img.convert('RGB').save(data_depth, "JPEG")
-                # return send_file(data_depth, mimetype='image/jpeg')
+                return send_file(path_depth_img)
             
         return ""
 
