@@ -1,0 +1,15 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <h2>Original image</h2>
+    <img id="image" src="data:image/jpeg;base64,{{ img_data }}">
+    <h2>Predicted depth map</h2>
+    <img id="depth map" src="data:image/jpeg;base64,{{ depth_data }}">
+ </body>
+</html>
+

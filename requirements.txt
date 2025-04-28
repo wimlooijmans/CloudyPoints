@@ -1,0 +1,12 @@
+numpy
+matplotlib
+pytorch-lightning
+torchmetrics
+torchsummary
+torchvision
+timm
+flask
+requests
+gunicorn==21.2.0
+# onnx
+# onnxscript
