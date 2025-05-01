@@ -17,8 +17,3 @@ The **/result/<img_name>** reads the original image from the upload folder and t
 ![Show result](sample_images/ms1_show_result.png)
 
 Finally, a Dockerfile was created to run the flask app locally in a container.
-
-
-
-
-
