@@ -73,4 +73,6 @@ jobs:
                 --memory=8Gi \
                 --cpu=2 \
                 --add-volume name=cp_volume_user_data,type=cloud-storage,bucket=cp_bucket_user_data \
-                --add-volume-mount volume=cp_volume_user_data,mount-path=/mnt/user_data_storage
+                --add-volume-mount volume=cp_volume_user_data,mount-path=/mnt/user_data_storage \
+                --quiet
+
