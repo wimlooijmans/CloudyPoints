@@ -65,11 +65,12 @@ jobs:
                 project_id: cloudypoints-452719
 
             - name: Deploy to Cloud
-              run: gcloud run deploy cp-flask-gcs \
-                   --region=europe-west1 \
-                   --source=$(pwd) \
-                   --allow-unauthenticated \
-                   --memory=8Gi \
-                   --cpu=2 \
-                   --add-volume name=cp_volume_user_data,type=cloud-storage,bucket=cp_bucket_user_data \
-                   --add-volume-mount volume=cp_volume_user_data,mount-path=/mnt/user_data_storage
+              run: |
+                gcloud run deploy cp-flask-gcs \
+                --region=europe-west1 \
+                --source=$(pwd) \
+                --allow-unauthenticated \
+                --memory=8Gi \
+                --cpu=2 \
+                --add-volume name=cp_volume_user_data,type=cloud-storage,bucket=cp_bucket_user_data \
+                --add-volume-mount volume=cp_volume_user_data,mount-path=/mnt/user_data_storage
