@@ -56,13 +56,13 @@ jobs:
               uses: google-github-actions/auth@v2.1.10
               with:
                 create_credentials_file: true
-                workload_identity_provider: 'projects/cloudypoints-452719/locations/global/workloadIdentityPools/cloudypoints-production/providers/cloudypoints-production'
-                service_account: 'github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com'
+                workload_identity_provider: projects/cloudypoints-452719/locations/global/workloadIdentityPools/cloudypoints-production/providers/cloudypoints-production
+                service_account: github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com
 
             - name: Set up Google Cloud SDK
               uses: google-github-actions/setup-gcloud@v2.1.4
               with:
-                project_id: 'cloudypoints-452719'
+                project_id: cloudypoints-452719
 
             - name: Deploy to Cloud
               run: gcloud run deploy cp-flask-gcs \
