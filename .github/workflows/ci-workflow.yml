@@ -56,7 +56,7 @@ jobs:
               uses: google-github-actions/auth@v2.1.10
               with:
                 create_credentials_file: true
-                workload_identity_provider: projects/cloudypoints-452719/locations/global/workloadIdentityPools/cloudypoints-production/providers/cloudypoints-production
+                workload_identity_provider: projects/436098836644/locations/global/workloadIdentityPools/cloudypoints-production/providers/cloudypoints-production
                 service_account: github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com
 
             - name: Set up Google Cloud SDK
