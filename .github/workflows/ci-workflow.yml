@@ -39,3 +39,37 @@ jobs:
             - name: Run tests
               run: |
                 pytest tests/
+
+    build-and-deploy:
+        permissions:
+            id-token: write
+            contents: read
+        runs-on: ubuntu-latest
+        needs: [pre-commit, pytest]
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: 'Google auth'
+              id: 'auth'
+              uses: 'google-github-actions@v2.1.10'
+              with:
+                create_credentials_file: true
+                workload_identity_provider: 'projects/cloudypoints-452719/locations/global/workloadIdentityPools/cloudypoints-production/providers/cloudypoints-production'
+                service_account: 'github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com'
+
+            - name: Set up Google Cloud SDK
+              uses: 'google-github-actions/setup-gcloud@v2.1.4'
+              with:
+                project_id: 'cloudypoints-452719'
+
+            - name: Deploy to Cloud
+              run: gcloud run deploy cp-flask-gcs \
+                   --region=europe-west1 \
+                   --source=$(pwd) \
+                   --allow-unauthenticated \
+                   --memory=8Gi \
+                   --cpu=2 \
+                   --add-volume name=cp_volume_user_data,type=cloud-storage,bucket=cp_bucket_user_data \
+                   --add-volume-mount volume=cp_volume_user_data,mount-path=/mnt/user_data_storage
