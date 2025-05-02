@@ -51,16 +51,16 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: 'Google auth'
-              id: 'auth'
-              uses: 'google-github-actions@v2.1.10'
+            - name: Google auth
+              id: auth
+              uses: google-github-actions@v2.1.10
               with:
                 create_credentials_file: true
                 workload_identity_provider: 'projects/cloudypoints-452719/locations/global/workloadIdentityPools/cloudypoints-production/providers/cloudypoints-production'
                 service_account: 'github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com'
 
             - name: Set up Google Cloud SDK
-              uses: 'google-github-actions/setup-gcloud@v2.1.4'
+              uses: google-github-actions/setup-gcloud@v2.1.4
               with:
                 project_id: 'cloudypoints-452719'
 
