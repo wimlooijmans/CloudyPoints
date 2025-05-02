@@ -53,7 +53,7 @@ jobs:
 
             - name: Google auth
               id: auth
-              uses: google-github-actions@v2.1.10
+              uses: google-github-actions/auth@v2.1.10
               with:
                 create_credentials_file: true
                 workload_identity_provider: 'projects/cloudypoints-452719/locations/global/workloadIdentityPools/cloudypoints-production/providers/cloudypoints-production'
