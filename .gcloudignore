@@ -16,3 +16,4 @@ src/uploads
 src/model_saved.pth
 *.ipynb
 *.md
+interface

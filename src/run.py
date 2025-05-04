@@ -96,7 +96,6 @@ def create_app():
             key = list(request.files.keys())[0]  # get first key
             img = request.files.get(key)
             if img and allowed_file(img.filename):
-
                 # Save image to mounted GCS bucket
                 filename = secure_filename(img.filename)
                 img.save(app.config["UPLOAD_FOLDER"] / filename)
