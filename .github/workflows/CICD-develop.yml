@@ -12,6 +12,8 @@ jobs:
 
     call-CD-workflow:
         needs: call-CI-workflow
+        permissions:
+            id-token: write
         uses: ./.github/workflows/reusable-CD.yml
         with:
             model-serving-api-name: DEVELOP-cp-model-serving-api
