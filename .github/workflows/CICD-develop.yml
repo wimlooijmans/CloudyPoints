@@ -17,5 +17,5 @@ jobs:
             contents: read
         uses: ./.github/workflows/reusable-CD.yml
         with:
-            model-serving-api-name: DEVELOP-cp-model-serving-api
-            interface-name: DEVELOP-cp-interface
+            model-serving-api-name: develop-cp-model-serving-api
+            interface-name: develop-cp-interface
