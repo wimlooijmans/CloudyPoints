@@ -1,0 +1,18 @@
+name: CICD Develop
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+    call-CI-workflow:
+        uses: ./.github/workflows/reusable-CI.yml
+
+    call-CD-workflow:
+        needs: call-CI-workflow
+        uses: ./.github/workflows/reusable-CD.yml
+        with:
+            model-serving-api-name: DEVELOP-cp-model-serving-api
+            interface-name: DEVELOP-cp-interface

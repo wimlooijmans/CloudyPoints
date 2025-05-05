@@ -1,0 +1,48 @@
+name: Reusable CD Workflow
+
+on:
+    workflow_call:
+        inputs:
+            model-serving-api-name:
+                required: true
+                type: string
+            interface-name:
+                required: true
+                type: string
+
+jobs:
+    build-and-deploy:
+        permissions:
+            id-token: write
+            contents: read
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Google auth
+              id: auth
+              uses: google-github-actions/auth@v2.1.10
+              with:
+                create_credentials_file: true
+                workload_identity_provider: projects/436098836644/locations/global/workloadIdentityPools/cloudypoints-production/providers/cloudypoints-production
+                service_account: github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com
+
+            - name: Set up Google Cloud SDK
+              uses: google-github-actions/setup-gcloud@v2.1.4
+              with:
+                project_id: cloudypoints-452719
+
+            - name: Deploy to Cloud
+              run: |
+                gcloud run deploy ${{ inputs.model-serving-api-name }} \
+                --region=europe-west1 \
+                --source=$(pwd) \
+                --allow-unauthenticated \
+                --memory=8Gi \
+                --cpu=2 \
+                --add-volume name=cp_volume_user_data,type=cloud-storage,bucket=cp_bucket_user_data \
+                --add-volume-mount volume=cp_volume_user_data,mount-path=/mnt/user_data_storage \
+                --build-service-account projects/cloudypoints-452719/serviceAccounts/github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com \
+                --quiet
