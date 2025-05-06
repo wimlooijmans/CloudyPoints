@@ -12,6 +12,9 @@ jobs:
 
     call-CD-workflow:
         needs: call-CI-workflow
+        permissions:
+            id-token: write
+            contents: read
         uses: ./.github/workflows/reusable-CD.yml
         with:
             model-serving-api-name: cp-model-serving-api
