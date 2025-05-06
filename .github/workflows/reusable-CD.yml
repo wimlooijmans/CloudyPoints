@@ -10,6 +10,9 @@ on:
                 required: true
                 type: string
 
+env:
+    MODEL_SERVING_BASE_URL: https://${{ inputs.model-serving-api-name }}-436098836644.europe-west1.run.app
+
 jobs:
     build-and-deploy:
         permissions:
@@ -34,7 +37,7 @@ jobs:
               with:
                 project_id: cloudypoints-452719
 
-            - name: Deploy to Cloud
+            - name: Deploy Model Serving to Cloud
               run: |
                 gcloud run deploy ${{ inputs.model-serving-api-name }} \
                 --region=europe-west1 \
@@ -44,5 +47,18 @@ jobs:
                 --cpu=2 \
                 --add-volume name=cp_volume_user_data,type=cloud-storage,bucket=cp_bucket_user_data \
                 --add-volume-mount volume=cp_volume_user_data,mount-path=/mnt/user_data_storage \
+                --build-service-account projects/cloudypoints-452719/serviceAccounts/github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com \
+                --quiet
+
+            - name: Deploy Interface
+              run: |
+                gcloud run deploy ${{ inputs.interface-name }} \
+                --region=europe-west1 \
+                --source=$(pwd)/interface \
+                --platform managed \
+                --allow-unauthenticated \
+                --memory=512Mi \
+                --cpu=1 \
+                --update-env-vars=CP_BASE_URL="${{ env.MODEL_SERVING_BASE_URL }}"
                 --build-service-account projects/cloudypoints-452719/serviceAccounts/github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com \
                 --quiet
