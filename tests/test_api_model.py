@@ -1,7 +1,3 @@
-import pytest
-from ..tests.conftest import client
-
-
 def test_request_home(client):
     """
     Test if homepage is available and returns response code 200
