@@ -59,6 +59,6 @@ jobs:
                 --allow-unauthenticated \
                 --memory=512Mi \
                 --cpu=1 \
-                --update-env-vars=CP_BASE_URL="${{ env.MODEL_SERVING_BASE_URL }}"
+                --update-env-vars=CP_BASE_URL="${{ env.MODEL_SERVING_BASE_URL }}" \
                 --build-service-account projects/cloudypoints-452719/serviceAccounts/github-actions-sa@cloudypoints-452719.iam.gserviceaccount.com \
                 --quiet
