@@ -11,13 +11,11 @@ from flask import (
     render_template,
     request,
     flash,
-    jsonify,
     redirect,
     url_for,
     send_file,
 )
 from werkzeug.utils import secure_filename
-import requests
 
 from PIL import Image
 from matplotlib import cm
@@ -78,7 +76,6 @@ def create_app():
                 flash("No selected file")
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
                 return redirect(url_for("predict"), code=307)
         return """
         <!doctype html>
