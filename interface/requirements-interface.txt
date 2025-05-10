@@ -1,3 +1,4 @@
 fsspec
 gcsfs
 streamlit
+google-cloud-storage

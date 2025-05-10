@@ -1,0 +1,82 @@
+[
+  {
+    "filename": "berlin_000000_000019_left_image.png",
+    "city": "berlin",
+    "img_id": "000000_000019"
+  },
+  {
+    "filename": "berlin_000100_000019_left_image.png",
+    "city": "berlin",
+    "img_id": "000100_000019"
+  },
+  {
+    "filename": "berlin_000200_000019_left_image.png",
+    "city": "berlin",
+    "img_id": "000200_000019"
+  },
+  {
+    "filename": "berlin_000300_000019_left_image.png",
+    "city": "berlin",
+    "img_id": "000300_000019"
+  },
+  {
+    "filename": "berlin_000400_000019_left_image.png",
+    "city": "berlin",
+    "img_id": "000400_000019"
+  },
+  {
+    "filename": "berlin_000500_000019_left_image.png",
+    "city": "berlin",
+    "img_id": "000500_000019"
+  },
+  {
+    "filename": "bielefeld_000000_019416_left_image.png",
+    "city": "bielefeld",
+    "img_id": "000000_019416"
+  },
+  {
+    "filename": "bielefeld_000000_059303_left_image.png",
+    "city": "bielefeld",
+    "img_id": "000000_059303"
+  },
+  {
+    "filename": "leverkusen_000029_000019_left_image.png",
+    "city": "leverkusen",
+    "img_id": "000029_000019"
+  },
+  {
+    "filename": "mainz_000000_022417_left_image.png",
+    "city": "mainz",
+    "img_id": "000000_022417"
+  },
+  {
+    "filename": "mainz_000001_030630_left_image.png",
+    "city": "mainz",
+    "img_id": "000001_030630"
+  },
+  {
+    "filename": "mainz_000003_008876_left_image.png",
+    "city": "mainz",
+    "img_id": "000003_008876"
+  },
+  {
+    "filename": "munich_000073_000019_left_image.png",
+    "city": "munich",
+    "img_id": "000073_000019"
+  },
+  {
+    "filename": "munich_000173_000019_left_image.png",
+    "city": "munich",
+    "img_id": "000173_000019"
+  },
+  {
+    "filename": "munich_000273_000019_left_image.png",
+    "city": "munich",
+    "img_id": "000273_000019"
+  },
+  {
+    "filename": "munich_000373_000019_left_image.png",
+    "city": "munich",
+    "img_id": "000373_000019"
+  }
+]
