@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -9,25 +10,19 @@ import helper_variables
 
 
 # Read cloud storage data
-client = storage.Client.from_service_account_json(
-    "../secrets/cloudypoints-452719-847a44935e18.json"
-)
+if os.path.exists("secrets/"):
+    client = storage.Client.from_service_account_json(
+        "secrets/cloudypoints-452719-847a44935e18.json"
+    )
+else:
+    client = storage.Client()
 
 bucket_name = "cp_bucket-1"
 bucket = client.bucket(bucket_name=bucket_name, user_project=None)
 blobs = client.list_blobs(bucket_name, prefix="data/test/", delimiter="/")
 
-# all_files_city = []
-# all_files_image_id = []
-
-# for blob in blobs:
-#     city_name, img_id = extract_from_file_name(blob.name, prefix='data/test/')
-#     all_files_city.append(city_name)
-#     all_files_image_id.append(img_id)
-
 prefix = "data/test/"
 all_filenames = [blob.name.removeprefix(prefix) for blob in blobs]
-
 
 # Map Data
 cities = ["Berlin", "Bielefeld", "Bonn", "Leverkusen", "Mainz", "Munich"]
