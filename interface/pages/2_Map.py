@@ -1,11 +1,11 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-
-# import requests
+import requests
 from google.cloud import storage
 
 from helper_functions import filter_image_names_on_city
+import helper_variables
 
 
 # Read cloud storage data
@@ -69,15 +69,25 @@ user_selection_img_name = st.select_slider(
 suffix = "_left_image.png"
 user_selection_blob = bucket.get_blob(prefix + user_selection_img_name + suffix)
 user_selection_img_bytes = user_selection_blob.download_as_bytes()
-print("Type user_selection_img_bytes: ", type(user_selection_img_bytes))
 
 # Request prediction
-# files_request = {"image": user_selection_img_bytes}
-# response = requests.post(cp_serving_url, files=files_request, timeout=max_timeout)
+files_request = {"image": (user_selection_img_name + suffix, user_selection_img_bytes)}
+response = requests.post(
+    helper_variables.cp_serving_url,
+    files=files_request,
+    timeout=helper_variables.max_timeout,
+)
 
 images_container = st.container()
 
+images_container.write("Image from test set - " + user_selection_img_name)
 images_container.image(
     user_selection_img_bytes,
     caption=("Image from test set - " + user_selection_img_name),
+)
+
+images_container.write("")
+images_container.write("Predicted Depth Image of " + user_selection_img_name)
+images_container.image(
+    response.content, caption="Predicted Depth Image of " + user_selection_img_name
 )

@@ -1,22 +1,14 @@
 import streamlit as st
-import os
 import requests
 from pathlib import Path
 from io import BytesIO, BufferedReader
 
+import helper_variables
 
 path_src = Path(__file__).resolve().parent
 path_user_data_storage = path_src.parent / "mnt" / "user_data_storage"
 path_uploads = path_user_data_storage / "uploads"
 path_predictions = path_user_data_storage / "predictions"
-
-cp_serving_base_url = os.getenv("CP_BASE_URL", "http://127.0.0.1:5001")
-cp_route_predict = os.getenv("CP_ROUTE_PREDICT", "predict")
-cp_serving_url = cp_serving_base_url + "/" + cp_route_predict
-
-# Max timeout for request
-# take in account start-up time for cp container
-max_timeout = 180
 
 with st.sidebar:
     st.write("**Status**")
@@ -24,7 +16,7 @@ with st.sidebar:
     placeholder = st.empty()
 
     placeholder.write(status)
-    response = requests.get(cp_serving_base_url)
+    response = requests.get(helper_variables.cp_serving_base_url)
     if response.status_code == 200:
         status = "Model Serving API Ready"
         placeholder.write(status)
@@ -41,6 +33,7 @@ uploaded_image = st.file_uploader(
     "Upload Image",
     ["jpg", "jpeg", "png"],
 )
+print(type(uploaded_image))
 
 images_container = st.container()
 
@@ -61,7 +54,11 @@ if uploaded_image is not None:
 
     # Request prediction
     files_request = {"image": uploaded_image}
-    response = requests.post(cp_serving_url, files=files_request, timeout=max_timeout)
+    response = requests.post(
+        helper_variables.cp_serving_url,
+        files=files_request,
+        timeout=helper_variables.max_timeout,
+    )
 
     st.write("Response code:", response.status_code)
     st.write("Response content type:", response.headers["Content-Type"])
