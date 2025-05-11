@@ -6,6 +6,8 @@ COPY /.streamlit /app/.streamlit/
 COPY /images /app/images/
 COPY /pages /app/pages/
 COPY Cloudy_Points.py /app/
+COPY helper_functions.py /app/
+COPY helper_variables.py /app/
 COPY requirements-interface.txt /app/
 
 ENV PORT=8501
