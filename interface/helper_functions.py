@@ -1,3 +1,20 @@
+import streamlit as st
+import requests
+
+
+def check_model_api_status(url, max_time_out):
+    with st.sidebar:
+        st.write("**Status**")
+        status = "Model Serving API Starting. Please wait..."
+        placeholder = st.empty()
+
+        placeholder.write(status)
+        response = requests.get(url, timeout=max_time_out)
+        if response.status_code == 200:
+            status = "Model Serving API Ready"
+            placeholder.write(status)
+
+
 def extract_from_file_name(file_name):
     """
     Extracts the city and the image id from the filename

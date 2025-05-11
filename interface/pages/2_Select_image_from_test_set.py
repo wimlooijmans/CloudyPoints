@@ -5,7 +5,7 @@ import pandas as pd
 import requests
 from google.cloud import storage
 
-from helper_functions import filter_image_names_on_city
+from helper_functions import filter_image_names_on_city, check_model_api_status
 import helper_variables
 
 
@@ -46,12 +46,18 @@ df_map_data.insert(0, "City", cities)
 df_map_data.insert(len(df_map_data.columns), "Color", colors)
 df_map_data.insert(len(df_map_data.columns), "Size", sizes)
 
-
 # Interface
-st.title("Images from Test Set")
-st.header("Map")
-st.map(df_map_data, color="Color", size="Size")
+# Set page config
+st.set_page_config(layout="wide")
 
+# Add API status check to sidebar
+check_model_api_status(
+    helper_variables.cp_serving_base_url, helper_variables.max_timeout
+)
+
+st.title("Images from Test Set")
+
+# City and Image Selection
 st.header("Select from Test Set")
 user_selection_city = st.selectbox(
     "Select a city:", cities, index=None, placeholder="Select city"
@@ -64,6 +70,7 @@ user_selection_img_name = st.select_slider(
     filtered_imgs,
 )
 
+# Load Selected Image
 suffix = "_left_image.png"
 user_selection_blob = bucket.get_blob(prefix + user_selection_img_name + suffix)
 user_selection_img_bytes = user_selection_blob.download_as_bytes()
@@ -76,6 +83,7 @@ response = requests.post(
     timeout=helper_variables.max_timeout,
 )
 
+# Display Image and Prediction
 images_container = st.container()
 images_container.subheader("Selected Image")
 
@@ -89,4 +97,15 @@ images_container.subheader("Predicted Depth Image")
 images_container.write("Predicted Depth Image of " + user_selection_img_name)
 images_container.image(
     response.content, caption="Predicted Depth Image of " + user_selection_img_name
+)
+
+# Show Map
+st.header("Map")
+st.map(
+    df_map_data,
+    color="Color",
+    size="Size",
+    use_container_width=False,
+    width=800,
+    height=400,
 )

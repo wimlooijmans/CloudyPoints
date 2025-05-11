@@ -1,25 +1,17 @@
 import streamlit as st
 import requests
-from pathlib import Path
-from io import BytesIO, BufferedReader
 
+from helper_functions import check_model_api_status
 import helper_variables
 
-path_src = Path(__file__).resolve().parent
-path_user_data_storage = path_src.parent / "mnt" / "user_data_storage"
-path_uploads = path_user_data_storage / "uploads"
-path_predictions = path_user_data_storage / "predictions"
 
-with st.sidebar:
-    st.write("**Status**")
-    status = "Model Serving API Starting. Please wait..."
-    placeholder = st.empty()
+# Set page config
+st.set_page_config(layout="wide")
 
-    placeholder.write(status)
-    response = requests.get(helper_variables.cp_serving_base_url)
-    if response.status_code == 200:
-        status = "Model Serving API Ready"
-        placeholder.write(status)
+# Add API status check to sidebar
+check_model_api_status(
+    helper_variables.cp_serving_base_url, helper_variables.max_timeout
+)
 
 st.title("Depth Estimation")
 st.markdown(
@@ -46,11 +38,6 @@ if uploaded_image is not None:
         uploaded_image,
         caption=file_name,
     )
-
-    # Transform to
-    uploaded_image_bytes = uploaded_image.getvalue()
-    uploaded_image_file_like = BytesIO(uploaded_image_bytes)
-    uploaded_image_buffered_reader = BufferedReader(uploaded_image_file_like)
 
     # Request prediction
     files_request = {"image": uploaded_image}
