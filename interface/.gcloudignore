@@ -2,7 +2,6 @@
 
 .env
 .venv
-.streamlit
 test_gcs_*
 secrets
 secrets/

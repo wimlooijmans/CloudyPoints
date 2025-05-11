@@ -48,8 +48,11 @@ df_map_data.insert(len(df_map_data.columns), "Size", sizes)
 
 
 # Interface
+st.title("Images from Test Set")
+st.header("Map")
 st.map(df_map_data, color="Color", size="Size")
 
+st.header("Select from Test Set")
 user_selection_city = st.selectbox(
     "Select a city:", cities, index=None, placeholder="Select city"
 )
@@ -74,6 +77,7 @@ response = requests.post(
 )
 
 images_container = st.container()
+images_container.subheader("Selected Image")
 
 images_container.write("Image from test set - " + user_selection_img_name)
 images_container.image(
@@ -81,7 +85,7 @@ images_container.image(
     caption=("Image from test set - " + user_selection_img_name),
 )
 
-images_container.write("")
+images_container.subheader("Predicted Depth Image")
 images_container.write("Predicted Depth Image of " + user_selection_img_name)
 images_container.image(
     response.content, caption="Predicted Depth Image of " + user_selection_img_name

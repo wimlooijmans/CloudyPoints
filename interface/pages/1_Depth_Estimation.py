@@ -30,10 +30,9 @@ st.markdown(
 )
 
 uploaded_image = st.file_uploader(
-    "Upload Image",
+    "Upload Image:",
     ["jpg", "jpeg", "png"],
 )
-print(type(uploaded_image))
 
 images_container = st.container()
 
@@ -42,6 +41,7 @@ if uploaded_image is not None:
     file_type = uploaded_image.type
 
     # Show image
+    images_container.subheader("Image")
     images_container.image(
         uploaded_image,
         caption=file_name,
@@ -60,9 +60,7 @@ if uploaded_image is not None:
         timeout=helper_variables.max_timeout,
     )
 
-    st.write("Response code:", response.status_code)
-    st.write("Response content type:", response.headers["Content-Type"])
-
+    images_container.subheader("Predicted Depth Image")
     images_container.image(
         response.content, caption="Predicted Depth Image of " + file_name
     )
