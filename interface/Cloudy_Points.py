@@ -5,7 +5,7 @@ from helper_functions import check_model_api_status
 import helper_variables
 
 port_interface = os.getenv("PORT", "8501")
-cp_interface_url = "http://localhost:" + port_interface
+cp_interface_url = "http://0.0.0.0:" + port_interface
 page_1_Depth_Estimation = "Depth_Estimation"
 page_2_Select_image_from_test_set = "Select_image_from_test_set"
 
@@ -19,18 +19,24 @@ check_model_api_status(
 
 st.title("Cloudy Points ☁️")
 
-st.markdown(
-    f"""
-    CloudyPoints is an application that provides Monocular Depth Estimation (MDE).
+st.write(
+    "CloudyPoints is an application that provides Monocular Depth Estimation (MDE)."
+)
 
-    You can upload an image on the
-    <a href="{cp_interface_url}/{page_1_Depth_Estimation}" target="_self">Depth Estimation page</a>
-    and a depth image will be returned.
+st.write("")
+st.write(
+    "You can upload an image on the Depth Estimation page and a depth image will be returned:"
+)
+st.page_link("pages/1_Depth_Estimation.py", label="Depth Estimation", icon="⬆")
 
-    If you do not have an image available to upload, you can
-    <a href="{cp_interface_url}/{page_2_Select_image_from_test_set}" target="_self">select an image from the test set.</a>
-    """,
-    unsafe_allow_html=True,
+st.write("")
+st.write(
+    "If you do not have an image available to upload, you can select an image from the test set:"
+)
+st.page_link(
+    "pages/2_Select_image_from_test_set.py",
+    label="Select image from test set",
+    icon=":material/photo_library:",
 )
 
 st.subheader("Example")
