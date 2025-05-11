@@ -1,6 +1,6 @@
 # API Implementation
 
-An API is implemented to serve the model. The app is made in Flask and the code can be found in the *src/* folder..
+An API is implemented to serve the model. The app is made in Flask and the code can be found in the *src/* folder.
 
 ## Code Overview
 
@@ -40,4 +40,4 @@ Files and folders to ignore are listed in the *.dockerignore* and *.gcloudignore
 
 The necessary packages are listed in *requirements.txt* in the root directory.
 
-The *Dockerfile* in the root directory describes how to build the image. The base image used is *python:3.12-slim*. To run the server, gunicorn is used with 1 worker and 8 threads. Important is to use the `--preload` argument and the `--timeout 120` argument so the application has enough time to download the model and weights.
+The *Dockerfile* in the root directory describes how to build the image. The base image used is *python:3.12-slim*. To run the server, gunicorn is used with 1 worker and 8 threads. Important is to use the `--preload` argument and the `--timeout 120` argument, so the application has enough time to download the model and weights.

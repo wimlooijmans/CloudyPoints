@@ -35,7 +35,7 @@ Two files are related to test the Streamlit helper functions:
 The file *test_streamlit_helper_functions.py* defines the test for the helper functions. Since these functions require lists as input and output, a file with data is created (*filenmaes_to_city_id.json*) to handle this more easily.
 
 ## Continuous Deployment
-If the Pre-commit and Pytest checks are completed successfully, the CD pipeline will run. This workflow requieres two inputs, the name for the cloud run service for respectively the Model Serving API and Interface:
+If the Pre-commit and Pytest checks are completed successfully, the CD pipeline will run. This workflow requires two inputs, the name for the cloud run service for respectively the Model Serving API and Interface:
 1. model-serving-api-name
 2. interface-name
 
