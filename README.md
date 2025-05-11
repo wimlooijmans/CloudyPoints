@@ -6,15 +6,14 @@ CloudyPoints is a project where we'll work on Monocular Depth Estimation (MDE) a
 This task is super important in real life like in Autonomous systems (Collision avoidance, ...) and video surveillance.
 
 ## GOAL of the project
-The final goal of this project is to be able to design and implement the application we described in the Description. TO do this, we need several steps as we want to design a full system using Machine Learning Operations best practices (MLOps). We will focus more on outdoor scenes.
+The final goal of this project is to be able to design and implement an application that generates a depth image from a provided image. During the design of this system, Machine Learning Operations (MLOps) best practices will be used. The focus will be on outdoor, street scene images.
 
 ## Dataset
-During this project, we will use the CityScapes Dataset which focuses on semantic understanding of urban street scenes. We have two important kind of images.
-First, we need our input images which are RGB images representing the scene on which we want to estimate the depth and generate the 3D point cloud. Second, we need the ground truth Depth maps of our input images in order to compare with the predictions made by our model.
+During this project, we will use the CityScapes Dataset which provides images of urban street scenes and depth measurements. First, we need input images, which are RGB images, representing the scene on which we want to estimate the depth and generate the 3D point cloud. Second, we need the ground truth Depth maps of our input images in order to compare with the predictions made by our model.
 
 ![image](https://github.com/user-attachments/assets/c342d016-55a2-4c5e-b994-130344680f39)
 
-## TODO
+<!-- ## TODO
 | # | Week | Work package| status |
 | --- | --- | --- | --- |
 | 1.1 | W01 | Pick a team | ✅ |
@@ -28,7 +27,26 @@ First, we need our input images which are RGB images representing the scene on w
 | 2.2 | W03 | Cloud environment | ✅ |
 | 2.3 | W04 | Train ML model | ✅ |
 | 2.4 | W04 | Evaluate ML model | ✅ |
-| 2.5 | W04 | Document data analysis and model performance | ✅ |
+| 2.5 | W04 | Document data analysis and model performance | ✅ | -->
+
+## Exploratory Data Analysis and Data Preparation
+
+A Exploratory Data Analysis is done and described:
+[Exploratory Data Analysis](EDA.md)
+
+To resize the images from the Cityscapes Dataset and created the ground truth depth maps from the distance measurements, a data preparation is carried out. This is described in the
+[Data Preparation](data_preparation/data_preparation.md).
+
+
+## Implementation
+
+The application consists out of two separate services
+1. [The Model Serving API](MODEL_SERVING_API.md)
+2. [The Streamlit Interface](interface/INTERFACE.md)
+
+Both applications are separately deployed in Google Cloud Run.
+
+A [CICD pipeline](CICD.md) is set up to check the code quality and automatically deploy the services.
 
 ## Team
 Amar Hamouma  - amar.hamouma@student.uliege.be.\
