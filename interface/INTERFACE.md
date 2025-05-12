@@ -12,7 +12,7 @@ The page to select an image from the test set is defined in *pages/2_Select_imag
 
 First, the code defines the necessary elements to connect to Google Cloud Storage and the storage buckets are defined. The test set images are stored in a Google Cloud Storage bucket and all the file names of these images are stored. Next, some data (cites, longitudes, latitudes,...) to construct the map is defined. Then, the interface is constructed. The filenames are filtered on the city selected by the user and passed as options to the slider element. The slider element returns a file name that is used to load the image from the cloud storage. Next, a POST request is made to the model serving API and the images are displayed.
 
-Each page shows the status of the model serving API. This is defined in the *helper_variables.py*. A GET request is made to the model serving API and if a status code 200 is returned, text is displayed in the sidebar that the API is ready. This is done because it can take a few seconds to start up the model serving API.
+Each page shows the status of the model serving API. This is defined in the *helper_functions.py*. A GET request is made to the model serving API and if a status code 200 is returned, text is displayed in the sidebar that the API is ready. This is done because it can take a few seconds to start up the model serving API.
 
 *helper_functions.py* defines the function to write the model serving API status to the sidebar. It also defines some functions to create the list for the options in the selection slider, based on the chosen city.
 
