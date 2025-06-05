@@ -16,3 +16,7 @@ src/uploads
 src/model_saved.pth
 *.ipynb
 *.md
+interface
+interface/
+secrets
+secrets/

@@ -1,0 +1,3 @@
+[server]
+# Set the maximum size of uploaded files to x MB
+maxUploadSize = 5

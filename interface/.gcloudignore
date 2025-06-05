@@ -1,0 +1,7 @@
+# interface.gcloudignore
+
+.env
+.venv
+test_gcs_*
+secrets
+secrets/

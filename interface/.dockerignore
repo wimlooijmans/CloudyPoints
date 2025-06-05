@@ -1,0 +1,7 @@
+# interface.Dockerfile.dockerignore
+
+.env
+.venv
+test_gcs_*
+secrets
+secrets/
