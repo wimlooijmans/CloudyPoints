@@ -11,7 +11,7 @@ The final goal of this project is to be able to design and implement an applicat
 ## Dataset
 During this project, we will use the CityScapes Dataset which provides images of urban street scenes and depth measurements. First, we need input images, which are RGB images, representing the scene on which we want to estimate the depth and generate the 3D point cloud. Second, we need the ground truth Depth maps of our input images in order to compare with the predictions made by our model.
 
-![image](https://github.com/user-attachments/assets/c342d016-55a2-4c5e-b994-130344680f39)
+![RGB - Ground Truth Depth map](https://github.com/wimlooijmans/CloudyPoints/blob/8c5041ef7c8b31c287e06472e767010eb0aa7519/sample_images/RGB%20-%20Ground%20Truth%20Depth%20map.png)
 
 <!-- ## TODO
 | # | Week | Work package| status |
